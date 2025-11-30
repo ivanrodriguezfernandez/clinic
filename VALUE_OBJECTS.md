@@ -207,13 +207,15 @@ You can create more Value Objects for:
 
 ```typescript
 // src/domain/valueobjects/SampleType.ts
+import { ValidationError } from '../../shared';
+
 export class SampleType {
   private readonly value: string;
   private static readonly VALID_TYPES = ['Blood', 'Urine', 'Saliva', 'Stool'];
 
   constructor(value: string) {
     if (!SampleType.VALID_TYPES.includes(value)) {
-      throw new Error(`Invalid sample type. Must be one of: ${SampleType.VALID_TYPES.join(', ')}`);
+      throw new ValidationError(`Invalid sample type. Must be one of: ${SampleType.VALID_TYPES.join(', ')}`);
     }
     this.value = value;
   }
