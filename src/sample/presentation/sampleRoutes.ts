@@ -7,12 +7,12 @@ export function createSampleRoutes(sampleController: SampleController): Router {
 
   router.post('/', asyncHandler((req: Request, res: Response) => sampleController.create(req, res)));
   router.get('/patient/:patientId', asyncHandler((req: Request, res: Response) =>
-    sampleController.listByPatient(req, res)
+    sampleController.listByPatient(req, res),
   ));
   router.get('/:id', asyncHandler((req: Request, res: Response) => sampleController.getById(req, res)));
   router.patch('/:id/notes', asyncHandler((req: Request, res: Response) => sampleController.updateNotes(req, res)));
   router.patch('/:id/start-processing', asyncHandler((req: Request, res: Response) =>
-    sampleController.startProcessing(req, res)
+    sampleController.startProcessing(req, res),
   ));
   router.patch('/:id/complete', asyncHandler((req: Request, res: Response) => sampleController.complete(req, res)));
   router.patch('/:id/reject', asyncHandler((req: Request, res: Response) => sampleController.reject(req, res)));

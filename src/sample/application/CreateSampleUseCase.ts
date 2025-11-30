@@ -26,7 +26,7 @@ export class CreateSampleUseCase {
   constructor(
     private sampleRepository: ISampleRepository,
     private patientRepository: IPatientRepository,
-    private clinicRepository: IClinicRepository
+    private clinicRepository: IClinicRepository,
   ) {}
 
   async execute(request: CreateSampleRequest): Promise<CreateSampleResponse> {
@@ -48,7 +48,7 @@ export class CreateSampleUseCase {
       request.patientId,
       request.clinicId,
       request.sampleType,
-      request.collectionDate
+      request.collectionDate,
     );
 
     await this.sampleRepository.save(sample);

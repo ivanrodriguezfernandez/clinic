@@ -13,7 +13,7 @@ export const errorHandler = (
   err: Error | ApiError,
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction,
 ) => {
   const apiError = err as ApiError;
   let statusCode = apiError.statusCode || 500;
@@ -48,7 +48,7 @@ export const errorHandler = (
 };
 
 export const asyncHandler = (
-  fn: (req: Request, res: Response, next: NextFunction) => Promise<void>
+  fn: (req: Request, res: Response, next: NextFunction) => Promise<void>,
 ) => {
   return (req: Request, res: Response, next: NextFunction) => {
     Promise.resolve(fn(req, res, next)).catch(next);

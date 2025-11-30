@@ -29,7 +29,7 @@ export class Patient {
     id?: string,
     isActive?: boolean,
     createdAt?: Date,
-    updatedAt?: Date
+    updatedAt?: Date,
   ) {
     if (!clinicId || clinicId.trim().length === 0) {
       throw new ValidationError('Clinic ID cannot be empty');

@@ -51,7 +51,7 @@ export class ClinicContainer {
       this.getUpdateClinicUseCase(),
       this.getDeleteClinicUseCase(),
       this.getActivateClinicUseCase(),
-      this.getDeactivateClinicUseCase()
+      this.getDeactivateClinicUseCase(),
     );
   }
 

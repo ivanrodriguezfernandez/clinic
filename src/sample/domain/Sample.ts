@@ -29,7 +29,7 @@ export class Sample {
     status?: SampleStatus,
     notes?: string,
     createdAt?: Date,
-    updatedAt?: Date
+    updatedAt?: Date,
   ) {
     if (!patientId || patientId.trim().length === 0) {
       throw new ValidationError('Patient ID cannot be empty');

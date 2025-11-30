@@ -25,7 +25,7 @@ export class Container {
   getSampleController() {
     return this.sampleContainer.getSampleController(
       this.patientContainer.getPatientRepository(),
-      this.clinicContainer.getClinicRepository()
+      this.clinicContainer.getClinicRepository(),
     );
   }
 }

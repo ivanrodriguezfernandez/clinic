@@ -50,7 +50,7 @@ describe('ActivateClinicUseCase and DeactivateClinicUseCase', () => {
     await deactivateClinicUseCase.execute(createdClinic.id);
 
     await expect(
-      deactivateClinicUseCase.execute(createdClinic.id)
+      deactivateClinicUseCase.execute(createdClinic.id),
     ).rejects.toThrow('Clinic is already inactive');
   });
 
@@ -62,7 +62,7 @@ describe('ActivateClinicUseCase and DeactivateClinicUseCase', () => {
     });
 
     await expect(
-      activateClinicUseCase.execute(createdClinic.id)
+      activateClinicUseCase.execute(createdClinic.id),
     ).rejects.toThrow('Clinic is already active');
   });
 });

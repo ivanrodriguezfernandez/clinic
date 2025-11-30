@@ -27,7 +27,7 @@ describe('Sample Use Cases', () => {
     createPatientUseCase = patientContainer.getCreatePatientUseCase(clinicContainer.getClinicRepository());
     createSampleUseCase = sampleContainer.getCreateSampleUseCase(
       patientContainer.getPatientRepository(),
-      clinicContainer.getClinicRepository()
+      clinicContainer.getClinicRepository(),
     );
 
     const clinic = await createClinicUseCase.execute({

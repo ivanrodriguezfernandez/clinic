@@ -18,7 +18,7 @@ export class SampleController {
     private startProcessingSampleUseCase: StartProcessingSampleUseCase,
     private completeSampleUseCase: CompleteSampleUseCase,
     private rejectSampleUseCase: RejectSampleUseCase,
-    private deleteSampleUseCase: DeleteSampleUseCase
+    private deleteSampleUseCase: DeleteSampleUseCase,
   ) {}
 
   async create(req: Request, res: Response): Promise<void> {

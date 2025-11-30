@@ -34,7 +34,7 @@ export interface CreatePatientResponse {
 export class CreatePatientUseCase {
   constructor(
     private patientRepository: IPatientRepository,
-    private clinicRepository: IClinicRepository
+    private clinicRepository: IClinicRepository,
   ) {}
 
   async execute(request: CreatePatientRequest): Promise<CreatePatientResponse> {
@@ -55,7 +55,7 @@ export class CreatePatientUseCase {
       email,
       phone,
       dateOfBirth,
-      request.clinicId
+      request.clinicId,
     );
 
     await this.patientRepository.save(patient);

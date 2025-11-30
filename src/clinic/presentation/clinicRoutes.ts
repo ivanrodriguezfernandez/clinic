@@ -12,7 +12,7 @@ export function createClinicRoutes(clinicController: ClinicController): Router {
   router.delete('/:id', asyncHandler((req: Request, res: Response) => clinicController.delete(req, res)));
   router.patch('/:id/activate', asyncHandler((req: Request, res: Response) => clinicController.activate(req, res)));
   router.patch('/:id/deactivate', asyncHandler((req: Request, res: Response) =>
-    clinicController.deactivate(req, res)
+    clinicController.deactivate(req, res),
   ));
 
   return router;

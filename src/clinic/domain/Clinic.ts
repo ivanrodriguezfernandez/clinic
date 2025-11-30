@@ -20,7 +20,7 @@ export class Clinic {
     id?: string,
     isActive?: boolean,
     createdAt?: Date,
-    updatedAt?: Date
+    updatedAt?: Date,
   ) {
     this.id = id || uuidv4();
     this.name = name;

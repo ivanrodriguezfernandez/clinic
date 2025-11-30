@@ -64,7 +64,7 @@ describe('UpdateClinicUseCase', () => {
       updateClinicUseCase.execute({
         id: 'non-existent-id',
         name: 'Updated Clinic',
-      })
+      }),
     ).rejects.toThrow('Clinic with id non-existent-id not found');
   });
 
@@ -79,7 +79,7 @@ describe('UpdateClinicUseCase', () => {
       updateClinicUseCase.execute({
         id: createdClinic.id,
         name: 'A',
-      })
+      }),
     ).rejects.toThrow('Clinic name must be at least 2 characters long');
   });
 });

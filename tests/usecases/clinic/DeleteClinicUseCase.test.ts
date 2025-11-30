@@ -30,7 +30,7 @@ describe('DeleteClinicUseCase', () => {
 
   test('should fail to delete non-existent clinic', async () => {
     await expect(
-      deleteClinicUseCase.execute('non-existent-id')
+      deleteClinicUseCase.execute('non-existent-id'),
     ).rejects.toThrow('Clinic with id non-existent-id not found');
   });
 });

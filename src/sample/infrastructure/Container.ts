@@ -57,7 +57,7 @@ export class SampleContainer {
       this.getStartProcessingSampleUseCase(),
       this.getCompleteSampleUseCase(),
       this.getRejectSampleUseCase(),
-      this.getDeleteSampleUseCase()
+      this.getDeleteSampleUseCase(),
     );
   }
 

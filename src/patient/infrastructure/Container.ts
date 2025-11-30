@@ -51,7 +51,7 @@ export class PatientContainer {
       this.getUpdatePatientUseCase(),
       this.getDeletePatientUseCase(),
       this.getActivatePatientUseCase(),
-      this.getDeactivatePatientUseCase()
+      this.getDeactivatePatientUseCase(),
     );
   }
 

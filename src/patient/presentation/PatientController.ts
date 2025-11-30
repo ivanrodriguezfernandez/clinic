@@ -16,7 +16,7 @@ export class PatientController {
     private updatePatientUseCase: UpdatePatientUseCase,
     private deletePatientUseCase: DeletePatientUseCase,
     private activatePatientUseCase: ActivatePatientUseCase,
-    private deactivatePatientUseCase: DeactivatePatientUseCase
+    private deactivatePatientUseCase: DeactivatePatientUseCase,
   ) {}
 
   async create(req: Request, res: Response): Promise<void> {

@@ -30,7 +30,7 @@ describe('CreateClinicUseCase', () => {
         name: '',
         address: 'Main Street 123',
         phone: '+34 912345678',
-      })
+      }),
     ).rejects.toThrow('Clinic name cannot be empty');
   });
 
@@ -40,7 +40,7 @@ describe('CreateClinicUseCase', () => {
         name: 'A',
         address: 'Main Street 123',
         phone: '+34 912345678',
-      })
+      }),
     ).rejects.toThrow('Clinic name must be at least 2 characters long');
   });
 
@@ -50,7 +50,7 @@ describe('CreateClinicUseCase', () => {
         name: 'Central Clinic',
         address: '',
         phone: '+34 912345678',
-      })
+      }),
     ).rejects.toThrow('Clinic address cannot be empty');
   });
 
@@ -60,7 +60,7 @@ describe('CreateClinicUseCase', () => {
         name: 'Central Clinic',
         address: 'Main',
         phone: '+34 912345678',
-      })
+      }),
     ).rejects.toThrow('Clinic address must be at least 5 characters long');
   });
 
@@ -70,7 +70,7 @@ describe('CreateClinicUseCase', () => {
         name: 'Central Clinic',
         address: 'Main Street 123',
         phone: '123',
-      })
+      }),
     ).rejects.toThrow('Invalid phone format');
   });
 
