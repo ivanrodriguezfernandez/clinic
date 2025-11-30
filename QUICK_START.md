@@ -155,25 +155,35 @@ npm run test:watch
 ## Folder Structure
 
 ```
-clean/
+clinic/
 ├── src/
-│   ├── domain/              # Business logic
-│   │   ├── entities/        # Clinic, Patient, Sample
-│   │   ├── valueobjects/    # Value objects
-│   │   └── repositories/    # Interfaces
-│   ├── application/         # Use cases
-│   │   └── usecases/
-│   │       ├── clinic/
-│   │       ├── patient/
-│   │       └── sample/
-│   ├── infrastructure/      # Technical implementations
-│   │   ├── repositories/    # In-memory repositories
-│   │   └── container/       # Dependency injection
-│   ├── presentation/        # HTTP API
-│   │   ├── controllers/
-│   │   └── routes/
-│   ├── __tests__/          # Tests
-│   └── index.ts            # Entry point
+│   ├── clinic/              # Clinic module (vertical slice)
+│   │   ├── domain/          # Business logic
+│   │   ├── application/     # Use cases
+│   │   ├── infrastructure/  # Repositories
+│   │   ├── presentation/    # Controllers & routes
+│   │   └── index.ts
+│   ├── patient/             # Patient module (vertical slice)
+│   │   ├── domain/
+│   │   ├── application/
+│   │   ├── infrastructure/
+│   │   ├── presentation/
+│   │   └── index.ts
+│   ├── sample/              # Sample module (vertical slice)
+│   │   ├── domain/
+│   │   ├── application/
+│   │   ├── infrastructure/
+│   │   ├── presentation/
+│   │   └── index.ts
+│   ├── shared/              # Shared utilities
+│   │   ├── errors/          # Custom error classes
+│   │   ├── middleware/      # Express middleware
+│   │   └── index.ts
+│   ├── Container.ts         # Global dependency injection
+│   └── index.ts             # Entry point
+├── tests/                   # Tests
+│   ├── usecases/            # Unit tests
+│   └── e2e/                 # E2E tests
 ├── dist/                    # Compiled code
 ├── package.json
 ├── tsconfig.json

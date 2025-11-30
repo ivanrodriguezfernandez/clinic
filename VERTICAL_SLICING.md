@@ -8,55 +8,47 @@ This project uses **Vertical Slicing** architecture, which organizes code by fea
 
 ```
 src/
-├── shared/                          # Shared across all features
+├── clinic/                         # Clinic module (vertical slice)
 │   ├── domain/
-│   │   ├── valueobjects/           # Shared value objects
-│   │   └── errors/                 # Domain errors
+│   │   ├── Clinic.ts              # Entity
+│   │   ├── IClinicRepository.ts    # Repository interface
+│   │   └── valueobjects/          # Value objects (ClinicName, ClinicAddress, ClinicPhone)
+│   ├── application/
+│   │   ├── CreateClinicUseCase.ts
+│   │   ├── GetClinicUseCase.ts
+│   │   ├── ListClinicsUseCase.ts
+│   │   ├── UpdateClinicUseCase.ts
+│   │   ├── DeleteClinicUseCase.ts
+│   │   ├── ActivateClinicUseCase.ts
+│   │   └── DeactivateClinicUseCase.ts
 │   ├── infrastructure/
-│   │   ├── container/              # Dependency injection
-│   │   └── repositories/           # In-memory repositories
-│   └── presentation/
-│       └── middleware/             # Shared middleware
+│   │   ├── InMemoryClinicRepository.ts
+│   │   └── Container.ts            # Module-level DI
+│   ├── presentation/
+│   │   ├── ClinicController.ts
+│   │   └── clinicRoutes.ts
+│   └── index.ts                    # Module exports
 │
-├── features/                        # Vertical slices by feature
-│   ├── clinic/                     # Clinic feature
-│   │   ├── domain/
-│   │   │   ├── Clinic.ts           # Entity
-│   │   │   └── ClinicRepository.ts # Repository interface
-│   │   ├── application/
-│   │   │   ├── CreateClinicUseCase.ts
-│   │   │   ├── GetClinicUseCase.ts
-│   │   │   ├── ListClinicsUseCase.ts
-│   │   │   ├── UpdateClinicUseCase.ts
-│   │   │   ├── DeleteClinicUseCase.ts
-│   │   │   ├── ActivateClinicUseCase.ts
-│   │   │   └── DeactivateClinicUseCase.ts
-│   │   ├── infrastructure/
-│   │   │   └── InMemoryClinicRepository.ts
-│   │   ├── presentation/
-│   │   │   ├── ClinicController.ts
-│   │   │   └── clinicRoutes.ts
-│   │   ├── __tests__/
-│   │   │   ├── usecases/           # Unit tests
-│   │   │   └── e2e/                # E2E tests
-│   │   └── index.ts                # Feature exports
-│   │
-│   ├── patient/                    # Patient feature
-│   │   ├── domain/
-│   │   ├── application/
-│   │   ├── infrastructure/
-│   │   ├── presentation/
-│   │   ├── __tests__/
-│   │   └── index.ts
-│   │
-│   └── sample/                     # Sample feature
-│       ├── domain/
-│       ├── application/
-│       ├── infrastructure/
-│       ├── presentation/
-│       ├── __tests__/
-│       └── index.ts
+├── patient/                        # Patient module (vertical slice)
+│   ├── domain/
+│   ├── application/
+│   ├── infrastructure/
+│   ├── presentation/
+│   └── index.ts
 │
+├── sample/                         # Sample module (vertical slice)
+│   ├── domain/
+│   ├── application/
+│   ├── infrastructure/
+│   ├── presentation/
+│   └── index.ts
+│
+├── shared/                         # Shared utilities
+│   ├── errors/                     # Custom error classes (ValidationError, NotFoundError, etc.)
+│   ├── middleware/                 # Express middleware (errorHandler)
+│   └── index.ts
+│
+├── Container.ts                    # Global dependency injection
 └── index.ts                        # Application entry point
 ```
 
@@ -84,19 +76,19 @@ import { ClinicName } from '../../shared/domain/valueobjects/ClinicName';
 ```
 
 ### 3. **Easy to Scale**
-Adding new features is straightforward - just create a new feature folder with the same structure.
+Adding new features is straightforward - just create a new module folder with the same structure.
 
 ```
-src/features/
+src/
 ├── clinic/
 ├── patient/
 ├── sample/
-└── appointment/    # New feature - same structure
+└── appointment/    # New module - same structure
     ├── domain/
     ├── application/
     ├── infrastructure/
     ├── presentation/
-    └── __tests__/
+    └── index.ts
 ```
 
 ### 4. **Improved Testability**
@@ -220,61 +212,55 @@ describe('Clinic E2E Tests', () => {
 
 ## Shared Code
 
-### Value Objects (`shared/domain/valueobjects/`)
-Reusable value objects used across features.
+### Value Objects (`shared/`)
+Reusable value objects used across modules.
 
 ```typescript
-// shared/domain/valueobjects/ClinicName.ts
-export class ClinicName {
-  private value: string;
+// src/shared/index.ts - Exports shared utilities
+export { ValidationError } from './errors/ValidationError';
+export { NotFoundError } from './errors/NotFoundError';
+export { ClinicName } from '../clinic/domain/valueobjects/ClinicName';
+export { PatientEmail } from '../patient/domain/valueobjects/PatientEmail';
+// ... other exports
+```
 
-  private constructor(value: string) {
-    this.value = value;
-  }
+### Error Classes (`shared/errors/`)
+Custom error classes for consistent error handling.
 
-  static create(value: string): ClinicName {
-    if (!value || value.trim().length < 3) {
-      throw new Error('Clinic name must be at least 3 characters');
-    }
-    return new ClinicName(value.trim());
-  }
-
-  getValue(): string {
-    return this.value;
+```typescript
+// src/shared/errors/ValidationError.ts
+export class ValidationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'ValidationError';
   }
 }
 ```
 
-### Repositories (`shared/infrastructure/repositories/`)
-In-memory repository implementations.
+### Global Container (`src/Container.ts`)
+Dependency injection container that wires all modules.
 
 ```typescript
-// shared/infrastructure/repositories/InMemoryClinicRepository.ts
-export class InMemoryClinicRepository implements ClinicRepository {
-  private clinics: Map<string, Clinic> = new Map();
-  // Implementation
-}
-```
+// src/Container.ts
+import { ClinicContainer } from './clinic/infrastructure/Container';
+import { PatientContainer } from './patient/infrastructure/Container';
+import { SampleContainer } from './sample/infrastructure/Container';
 
-### Container (`shared/infrastructure/container/`)
-Dependency injection container.
-
-```typescript
-// shared/infrastructure/container/Container.ts
 export class Container {
-  private clinicRepository: ClinicRepository;
-  private patientRepository: PatientRepository;
-  // ... other repositories
+  private clinicContainer: ClinicContainer;
+  private patientContainer: PatientContainer;
+  private sampleContainer: SampleContainer;
 
   constructor() {
-    this.clinicRepository = new InMemoryClinicRepository();
-    this.patientRepository = new InMemoryPatientRepository();
+    this.clinicContainer = new ClinicContainer();
+    this.patientContainer = new PatientContainer();
+    this.sampleContainer = new SampleContainer();
   }
 
-  getCreateClinicUseCase(): CreateClinicUseCase {
-    return new CreateClinicUseCase(this.clinicRepository);
+  getClinicController() {
+    return this.clinicContainer.getClinicController();
   }
-  // ... other use case getters
+  // ... other getters
 }
 ```
 
@@ -296,20 +282,15 @@ export { DeactivateClinicUseCase } from './application/DeactivateClinicUseCase';
 export { ClinicController } from './presentation/ClinicController';
 ```
 
-## Migration Path
+## How This Project is Organized
 
-If migrating from layered architecture:
+This project already follows vertical slicing with modules:
 
-1. Create `src/features/` directory
-2. Create subdirectories for each feature (clinic, patient, sample)
-3. Move domain entities to `features/{feature}/domain/`
-4. Move use cases to `features/{feature}/application/`
-5. Move repositories to `features/{feature}/infrastructure/`
-6. Move controllers/routes to `features/{feature}/presentation/`
-7. Move tests to `features/{feature}/__tests__/`
-8. Create `shared/` for cross-cutting concerns
-9. Update imports and exports
-10. Update Container to use new structure
+1. Each module (clinic, patient, sample) is self-contained
+2. Shared utilities are in `src/shared/`
+3. Global container wires all modules in `src/Container.ts`
+4. Tests are organized in `tests/` directory
+5. Each module exports its public API via `index.ts`
 
 ## Advantages Over Layered Architecture
 
@@ -333,15 +314,17 @@ If migrating from layered architecture:
 7. **One responsibility** - Each use case does one thing
 8. **Immutable value objects** - Prevent accidental mutations
 
-## Example: Adding a New Feature
+## Example: Adding a New Module
 
-To add an `Appointment` feature:
+To add an `Appointment` module:
 
 ```
-src/features/appointment/
+src/appointment/
 ├── domain/
 │   ├── Appointment.ts
-│   └── AppointmentRepository.ts
+│   ├── IAppointmentRepository.ts
+│   └── valueobjects/
+│       └── AppointmentTime.ts
 ├── application/
 │   ├── CreateAppointmentUseCase.ts
 │   ├── GetAppointmentUseCase.ts
@@ -349,17 +332,16 @@ src/features/appointment/
 │   ├── UpdateAppointmentUseCase.ts
 │   └── DeleteAppointmentUseCase.ts
 ├── infrastructure/
-│   └── InMemoryAppointmentRepository.ts
+│   ├── InMemoryAppointmentRepository.ts
+│   └── Container.ts
 ├── presentation/
 │   ├── AppointmentController.ts
 │   └── appointmentRoutes.ts
-├── __tests__/
-│   ├── usecases/
-│   │   ├── CreateAppointmentUseCase.test.ts
-│   │   └── ...
-│   └── e2e/
-│       └── appointment.e2e.test.ts
 └── index.ts
 ```
 
-Then register in Container and add routes to main app.
+Then:
+1. Create `tests/usecases/appointment/` for unit tests
+2. Create `tests/e2e/appointment.e2e.test.ts` for E2E tests
+3. Update `src/Container.ts` to include AppointmentContainer
+4. Update `src/index.ts` to register appointment routes

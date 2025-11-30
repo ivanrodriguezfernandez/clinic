@@ -16,22 +16,44 @@ Node.js + TypeScript API with clean architecture, separated use cases, and rich 
 
 ```
 src/
-├── domain/                    # Business logic
-│   ├── entities/             # Rich entities (Clinic, Patient, Sample)
-│   ├── valueobjects/         # Value objects (ClinicName, PatientEmail, etc.)
-│   └── repositories/         # Repository interfaces
-├── application/              # Use cases
-│   └── usecases/
-│       ├── clinic/          # Clinic use cases
-│       ├── patient/         # Patient use cases
-│       └── sample/          # Sample use cases
-├── infrastructure/           # Technical implementations
-│   ├── repositories/        # In-memory repositories
-│   └── container/           # Dependency injection
-├── presentation/             # HTTP API
-│   ├── controllers/         # Controllers
-│   └── routes/              # Express routes
-└── index.ts                 # Entry point
+├── clinic/                    # Clinic module (vertical slice)
+│   ├── domain/               # Business logic
+│   │   ├── Clinic.ts         # Entity
+│   │   ├── IClinicRepository.ts  # Repository interface
+│   │   └── valueobjects/     # Value objects (ClinicName, ClinicAddress, ClinicPhone)
+│   ├── application/          # Use cases
+│   │   ├── CreateClinicUseCase.ts
+│   │   ├── UpdateClinicUseCase.ts
+│   │   ├── DeleteClinicUseCase.ts
+│   │   ├── GetClinicUseCase.ts
+│   │   ├── ListClinicsUseCase.ts
+│   │   ├── ActivateClinicUseCase.ts
+│   │   └── DeactivateClinicUseCase.ts
+│   ├── infrastructure/       # Technical implementations
+│   │   ├── InMemoryClinicRepository.ts
+│   │   └── Container.ts      # Dependency injection
+│   ├── presentation/         # HTTP API
+│   │   ├── ClinicController.ts
+│   │   └── clinicRoutes.ts
+│   └── index.ts
+├── patient/                   # Patient module (vertical slice)
+│   ├── domain/
+│   ├── application/
+│   ├── infrastructure/
+│   ├── presentation/
+│   └── index.ts
+├── sample/                    # Sample module (vertical slice)
+│   ├── domain/
+│   ├── application/
+│   ├── infrastructure/
+│   ├── presentation/
+│   └── index.ts
+├── shared/                    # Shared utilities
+│   ├── errors/               # Custom error classes
+│   ├── middleware/           # Express middleware
+│   └── index.ts
+├── Container.ts              # Global dependency injection
+└── index.ts                  # Entry point
 ```
 
 ## Installation

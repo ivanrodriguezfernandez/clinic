@@ -13,7 +13,7 @@ This API follows the **Clean Architecture** principles by Robert C. Martin, with
 
 ### 1. Domain Layer
 
-**Location**: `src/domain/`
+**Location**: `src/{module}/domain/` (e.g., `src/clinic/domain/`, `src/patient/domain/`)
 
 The innermost and most important layer. Contains pure business logic.
 
@@ -63,15 +63,17 @@ Value Objects represent domain values with built-in validation and business logi
 
 **Example - ClinicName**:
 ```typescript
+import { ValidationError } from '../../../shared';
+
 export class ClinicName {
   private readonly value: string;
 
   constructor(value: string) {
     if (!value || value.trim().length === 0) {
-      throw new Error('Clinic name cannot be empty');
+      throw new ValidationError('Clinic name cannot be empty');
     }
     if (value.trim().length < 2) {
-      throw new Error('Clinic name must be at least 2 characters long');
+      throw new ValidationError('Clinic name must be at least 2 characters long');
     }
     this.value = value.trim();
   }
@@ -98,7 +100,7 @@ export interface IClinicRepository {
 
 ### 2. Application Layer
 
-**Location**: `src/application/`
+**Location**: `src/{module}/application/` (e.g., `src/clinic/application/`)
 
 Orchestrates business logic. Contains **use cases**.
 
@@ -151,7 +153,7 @@ export class CreateClinicUseCase {
 
 ### 3. Infrastructure Layer
 
-**Location**: `src/infrastructure/`
+**Location**: `src/{module}/infrastructure/` (e.g., `src/clinic/infrastructure/`)
 
 Technical implementations of domain interfaces.
 
@@ -201,7 +203,7 @@ export class Container {
 
 ### 4. Presentation Layer
 
-**Location**: `src/presentation/`
+**Location**: `src/{module}/presentation/` (e.g., `src/clinic/presentation/`)
 
 HTTP interface with Express.
 
