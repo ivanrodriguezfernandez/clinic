@@ -4,9 +4,6 @@ import { PatientContainer } from '../../../src/patient/infrastructure/Container'
 import { CreateClinicUseCase } from '../../../src/clinic/application/CreateClinicUseCase';
 import { CreatePatientUseCase } from '../../../src/patient/application/CreatePatientUseCase';
 import { CreateSampleUseCase } from '../../../src/sample/application/CreateSampleUseCase';
-import { GetSampleUseCase } from '../../../src/sample/application/GetSampleUseCase';
-import { ListSamplesByPatientUseCase } from '../../../src/sample/application/ListSamplesByPatientUseCase';
-import { DeleteSampleUseCase } from '../../../src/sample/application/DeleteSampleUseCase';
 
 describe('Sample Use Cases', () => {
   let clinicContainer: ClinicContainer;

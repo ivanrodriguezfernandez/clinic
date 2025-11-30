@@ -2,12 +2,6 @@ import { PatientContainer } from '../../../src/patient/infrastructure/Container'
 import { ClinicContainer } from '../../../src/clinic/infrastructure/Container';
 import { CreateClinicUseCase } from '../../../src/clinic/application/CreateClinicUseCase';
 import { CreatePatientUseCase } from '../../../src/patient/application/CreatePatientUseCase';
-import { GetPatientUseCase } from '../../../src/patient/application/GetPatientUseCase';
-import { ListPatientsByClinicUseCase } from '../../../src/patient/application/ListPatientsByClinicUseCase';
-import { UpdatePatientUseCase } from '../../../src/patient/application/UpdatePatientUseCase';
-import { DeletePatientUseCase } from '../../../src/patient/application/DeletePatientUseCase';
-import { ActivatePatientUseCase } from '../../../src/patient/application/ActivatePatientUseCase';
-import { DeactivatePatientUseCase } from '../../../src/patient/application/DeactivatePatientUseCase';
 
 describe('Patient Use Cases', () => {
   let clinicContainer: ClinicContainer;
