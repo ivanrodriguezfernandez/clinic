@@ -1,7 +1,7 @@
 {
-  "name": "clean-api",
+  "name": "clinic-api",
   "version": "1.0.0",
-  "description": "Clean Architecture API with Node.js and TypeScript",
+  "description": "Clinic Management API with Node.js and TypeScript",
   "main": "dist/index.js",
   "scripts": {
     "dev": "ts-node src/index.ts",

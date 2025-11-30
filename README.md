@@ -1,6 +1,6 @@
-# Clean Architecture API
+# Clinic Management API
 
-Node.js + TypeScript API with clean architecture, separated use cases, and rich domain models.
+Node.js + TypeScript API for managing clinics, patients, and medical samples with clean architecture and domain-driven design.
 
 ## Features
 
@@ -204,6 +204,34 @@ curl -X POST http://localhost:3000/api/samples \
 npm run test
 npm run test:watch
 ```
+
+## Linting
+
+```bash
+npm run lint
+npm run lint:fix
+```
+
+## NPM Dependencies
+
+### Production
+- **express** (^4.18.2) - Web framework for Node.js
+- **uuid** (^9.0.0) - Generate unique identifiers
+
+### Development
+- **@types/express** (^4.17.17) - TypeScript types for Express
+- **@types/jest** (^29.5.2) - TypeScript types for Jest
+- **@types/node** (^20.3.1) - TypeScript types for Node.js
+- **@types/supertest** (^2.0.12) - TypeScript types for Supertest
+- **@types/uuid** (^9.0.2) - TypeScript types for UUID
+- **@typescript-eslint/eslint-plugin** (^8.48.0) - ESLint plugin for TypeScript
+- **@typescript-eslint/parser** (^8.48.0) - TypeScript parser for ESLint
+- **eslint** (^9.39.1) - Code linting tool
+- **jest** (^29.5.0) - Testing framework
+- **supertest** (^6.3.3) - HTTP assertion library
+- **ts-jest** (^29.1.0) - Jest transformer for TypeScript
+- **ts-node** (^10.9.1) - TypeScript execution for Node.js
+- **typescript** (^5.1.3) - TypeScript compiler
 
 ## Future Improvements
 
