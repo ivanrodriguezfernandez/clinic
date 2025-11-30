@@ -1,4 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
+import { ValidationError } from '../../shared/errors/ValidationError';
+import { ConflictError } from '../../shared/errors/ConflictError';
 
 export enum SampleStatus {
   PENDING = 'PENDING',
@@ -30,16 +32,16 @@ export class Sample {
     updatedAt?: Date
   ) {
     if (!patientId || patientId.trim().length === 0) {
-      throw new Error('Patient ID cannot be empty');
+      throw new ValidationError('Patient ID cannot be empty');
     }
     if (!clinicId || clinicId.trim().length === 0) {
-      throw new Error('Clinic ID cannot be empty');
+      throw new ValidationError('Clinic ID cannot be empty');
     }
     if (!sampleType || sampleType.trim().length === 0) {
-      throw new Error('Sample type cannot be empty');
+      throw new ValidationError('Sample type cannot be empty');
     }
     if (collectionDate > new Date()) {
-      throw new Error('Collection date cannot be in the future');
+      throw new ValidationError('Collection date cannot be in the future');
     }
 
     this.id = id || uuidv4();
@@ -91,7 +93,7 @@ export class Sample {
 
   changeSampleType(newSampleType: string): void {
     if (!newSampleType || newSampleType.trim().length === 0) {
-      throw new Error('Sample type cannot be empty');
+      throw new ValidationError('Sample type cannot be empty');
     }
     this.sampleType = newSampleType;
     this.updatedAt = new Date();
@@ -104,7 +106,7 @@ export class Sample {
 
   startProcessing(): void {
     if (this.status !== SampleStatus.PENDING) {
-      throw new Error('Only pending samples can start processing');
+      throw new ConflictError('Only pending samples can start processing');
     }
     this.status = SampleStatus.PROCESSING;
     this.updatedAt = new Date();
@@ -112,7 +114,7 @@ export class Sample {
 
   complete(): void {
     if (this.status !== SampleStatus.PROCESSING) {
-      throw new Error('Only processing samples can be completed');
+      throw new ConflictError('Only processing samples can be completed');
     }
     this.status = SampleStatus.COMPLETED;
     this.updatedAt = new Date();
@@ -120,7 +122,7 @@ export class Sample {
 
   reject(reason: string): void {
     if (this.status === SampleStatus.COMPLETED || this.status === SampleStatus.REJECTED) {
-      throw new Error('Cannot reject a completed or already rejected sample');
+      throw new ConflictError('Cannot reject a completed or already rejected sample');
     }
     this.status = SampleStatus.REJECTED;
     this.notes = `Rejected: ${reason}`;

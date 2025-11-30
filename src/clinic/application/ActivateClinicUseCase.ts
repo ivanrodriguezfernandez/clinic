@@ -1,3 +1,4 @@
+import { NotFoundError } from '../../shared/errors/NotFoundError';
 import { IClinicRepository } from '../domain/IClinicRepository';
 
 export interface ActivateClinicResponse {
@@ -14,7 +15,7 @@ export class ActivateClinicUseCase {
     const clinic = await this.clinicRepository.findById(id);
 
     if (!clinic) {
-      throw new Error(`Clinic with id ${id} not found`);
+      throw new NotFoundError(`Clinic with id ${id} not found`);
     }
 
     clinic.activate();

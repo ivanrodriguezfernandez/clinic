@@ -1,3 +1,4 @@
+import { NotFoundError } from '../../shared/errors/NotFoundError';
 import { IPatientRepository } from '../domain/IPatientRepository';
 import { PatientFirstName } from '../domain/valueobjects/PatientFirstName';
 import { PatientLastName } from '../domain/valueobjects/PatientLastName';
@@ -31,7 +32,7 @@ export class UpdatePatientUseCase {
     const patient = await this.patientRepository.findById(request.id);
 
     if (!patient) {
-      throw new Error(`Patient with id ${request.id} not found`);
+      throw new NotFoundError(`Patient with id ${request.id} not found`);
     }
 
     if (request.firstName) {

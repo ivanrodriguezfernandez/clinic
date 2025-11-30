@@ -1,3 +1,4 @@
+import { NotFoundError } from '../../shared/errors/NotFoundError';
 import { ISampleRepository } from '../domain/ISampleRepository';
 
 export class DeleteSampleUseCase {
@@ -7,7 +8,7 @@ export class DeleteSampleUseCase {
     const sample = await this.sampleRepository.findById(id);
 
     if (!sample) {
-      throw new Error(`Sample with id ${id} not found`);
+      throw new NotFoundError(`Sample with id ${id} not found`);
     }
 
     await this.sampleRepository.delete(id);

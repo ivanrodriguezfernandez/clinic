@@ -1,3 +1,4 @@
+import { NotFoundError } from '../../shared/errors/NotFoundError';
 import { Clinic } from '../domain/Clinic';
 import { IClinicRepository } from '../domain/IClinicRepository';
 
@@ -18,14 +19,14 @@ export class InMemoryClinicRepository implements IClinicRepository {
 
   async update(clinic: Clinic): Promise<void> {
     if (!this.clinics.has(clinic.getId())) {
-      throw new Error(`Clinic with id ${clinic.getId()} not found`);
+      throw new NotFoundError(`Clinic with id ${clinic.getId()} not found`);
     }
     this.clinics.set(clinic.getId(), clinic);
   }
 
   async delete(id: string): Promise<void> {
     if (!this.clinics.has(id)) {
-      throw new Error(`Clinic with id ${id} not found`);
+      throw new NotFoundError(`Clinic with id ${id} not found`);
     }
     this.clinics.delete(id);
   }

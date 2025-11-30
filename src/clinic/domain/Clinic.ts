@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { ConflictError } from '../../shared/errors/ConflictError';
 import { ClinicName } from '../domain/valueobjects/ClinicName';
 import { ClinicAddress } from '../domain/valueobjects/ClinicAddress';
 import { ClinicPhone } from '../domain/valueobjects/ClinicPhone';
@@ -75,7 +76,7 @@ export class Clinic {
 
   activate(): void {
     if (this.isActive) {
-      throw new Error('Clinic is already active');
+      throw new ConflictError('Clinic is already active');
     }
     this.isActive = true;
     this.updatedAt = new Date();
@@ -83,7 +84,7 @@ export class Clinic {
 
   deactivate(): void {
     if (!this.isActive) {
-      throw new Error('Clinic is already inactive');
+      throw new ConflictError('Clinic is already inactive');
     }
     this.isActive = false;
     this.updatedAt = new Date();

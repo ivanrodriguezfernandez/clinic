@@ -148,7 +148,7 @@ describe('Clinic E2E Tests', () => {
         .send({
           name: 'Updated Clinic',
         })
-        .expect(500);
+        .expect(404);
 
       expect(response.body).toHaveProperty('error');
     });

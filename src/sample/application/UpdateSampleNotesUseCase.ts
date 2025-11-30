@@ -1,3 +1,4 @@
+import { NotFoundError } from '../../shared/errors/NotFoundError';
 import { ISampleRepository } from '../domain/ISampleRepository';
 
 export interface UpdateSampleNotesRequest {
@@ -20,7 +21,7 @@ export class UpdateSampleNotesUseCase {
     const sample = await this.sampleRepository.findById(request.id);
 
     if (!sample) {
-      throw new Error(`Sample with id ${request.id} not found`);
+      throw new NotFoundError(`Sample with id ${request.id} not found`);
     }
 
     sample.updateNotes(request.notes);

@@ -1,3 +1,4 @@
+import { NotFoundError } from '../../shared/errors/NotFoundError';
 import { IClinicRepository } from '../domain/IClinicRepository';
 import { ClinicName } from '../domain/valueobjects/ClinicName';
 import { ClinicAddress } from '../domain/valueobjects/ClinicAddress';
@@ -26,7 +27,7 @@ export class UpdateClinicUseCase {
     const clinic = await this.clinicRepository.findById(request.id);
 
     if (!clinic) {
-      throw new Error(`Clinic with id ${request.id} not found`);
+      throw new NotFoundError(`Clinic with id ${request.id} not found`);
     }
 
     if (request.name) {

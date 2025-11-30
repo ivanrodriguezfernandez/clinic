@@ -1,3 +1,4 @@
+import { NotFoundError } from '../../shared/errors/NotFoundError';
 import { IPatientRepository } from '../domain/IPatientRepository';
 
 export class DeletePatientUseCase {
@@ -7,7 +8,7 @@ export class DeletePatientUseCase {
     const patient = await this.patientRepository.findById(id);
 
     if (!patient) {
-      throw new Error(`Patient with id ${id} not found`);
+      throw new NotFoundError(`Patient with id ${id} not found`);
     }
 
     await this.patientRepository.delete(id);

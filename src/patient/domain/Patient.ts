@@ -1,4 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
+import { ValidationError } from '../../shared/errors/ValidationError';
+import { ConflictError } from '../../shared/errors/ConflictError';
 import { PatientFirstName } from '../domain/valueobjects/PatientFirstName';
 import { PatientLastName } from '../domain/valueobjects/PatientLastName';
 import { PatientEmail } from '../domain/valueobjects/PatientEmail';
@@ -30,7 +32,7 @@ export class Patient {
     updatedAt?: Date
   ) {
     if (!clinicId || clinicId.trim().length === 0) {
-      throw new Error('Clinic ID cannot be empty');
+      throw new ValidationError('Clinic ID cannot be empty');
     }
 
     this.id = id || uuidv4();
@@ -115,7 +117,7 @@ export class Patient {
 
   activate(): void {
     if (this.isActive) {
-      throw new Error('Patient is already active');
+      throw new ConflictError('Patient is already active');
     }
     this.isActive = true;
     this.updatedAt = new Date();
@@ -123,7 +125,7 @@ export class Patient {
 
   deactivate(): void {
     if (!this.isActive) {
-      throw new Error('Patient is already inactive');
+      throw new ConflictError('Patient is already inactive');
     }
     this.isActive = false;
     this.updatedAt = new Date();

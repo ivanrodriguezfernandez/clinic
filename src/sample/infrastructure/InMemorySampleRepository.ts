@@ -1,3 +1,4 @@
+import { NotFoundError } from '../../shared/errors/NotFoundError';
 import { Sample } from '../domain/Sample';
 import { ISampleRepository } from '../domain/ISampleRepository';
 
@@ -26,14 +27,14 @@ export class InMemorySampleRepository implements ISampleRepository {
 
   async update(sample: Sample): Promise<void> {
     if (!this.samples.has(sample.getId())) {
-      throw new Error(`Sample with id ${sample.getId()} not found`);
+      throw new NotFoundError(`Sample with id ${sample.getId()} not found`);
     }
     this.samples.set(sample.getId(), sample);
   }
 
   async delete(id: string): Promise<void> {
     if (!this.samples.has(id)) {
-      throw new Error(`Sample with id ${id} not found`);
+      throw new NotFoundError(`Sample with id ${id} not found`);
     }
     this.samples.delete(id);
   }

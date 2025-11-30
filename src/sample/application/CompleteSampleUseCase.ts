@@ -1,3 +1,4 @@
+import { NotFoundError } from '../../shared/errors/NotFoundError';
 import { ISampleRepository } from '../domain/ISampleRepository';
 
 export interface CompleteSampleResponse {
@@ -15,7 +16,7 @@ export class CompleteSampleUseCase {
     const sample = await this.sampleRepository.findById(id);
 
     if (!sample) {
-      throw new Error(`Sample with id ${id} not found`);
+      throw new NotFoundError(`Sample with id ${id} not found`);
     }
 
     sample.complete();
