@@ -20,7 +20,10 @@ src/
 │   ├── domain/               # Business logic
 │   │   ├── Clinic.ts         # Entity
 │   │   ├── IClinicRepository.ts  # Repository interface
-│   │   └── valueobjects/     # Value objects (ClinicName, ClinicAddress, ClinicPhone)
+│   │   └── valueobjects/     # Value objects
+│   │       ├── ClinicName.ts
+│   │       ├── ClinicAddress.ts
+│   │       └── ClinicPhone.ts
 │   ├── application/          # Use cases
 │   │   ├── CreateClinicUseCase.ts
 │   │   ├── UpdateClinicUseCase.ts
@@ -37,20 +40,61 @@ src/
 │   │   └── clinicRoutes.ts
 │   └── index.ts
 ├── patient/                   # Patient module (vertical slice)
-│   ├── domain/
-│   ├── application/
-│   ├── infrastructure/
-│   ├── presentation/
+│   ├── domain/               # Business logic
+│   │   ├── Patient.ts        # Entity
+│   │   ├── IPatientRepository.ts  # Repository interface
+│   │   └── valueobjects/     # Value objects
+│   │       ├── PatientFirstName.ts
+│   │       ├── PatientLastName.ts
+│   │       ├── PatientEmail.ts
+│   │       ├── PatientPhone.ts
+│   │       └── PatientDateOfBirth.ts
+│   ├── application/          # Use cases
+│   │   ├── CreatePatientUseCase.ts
+│   │   ├── UpdatePatientUseCase.ts
+│   │   ├── DeletePatientUseCase.ts
+│   │   ├── GetPatientUseCase.ts
+│   │   ├── ListPatientsByClinicUseCase.ts
+│   │   ├── ActivatePatientUseCase.ts
+│   │   └── DeactivatePatientUseCase.ts
+│   ├── infrastructure/       # Technical implementations
+│   │   ├── InMemoryPatientRepository.ts
+│   │   └── Container.ts      # Dependency injection
+│   ├── presentation/         # HTTP API
+│   │   ├── PatientController.ts
+│   │   └── patientRoutes.ts
 │   └── index.ts
 ├── sample/                    # Sample module (vertical slice)
-│   ├── domain/
-│   ├── application/
-│   ├── infrastructure/
-│   ├── presentation/
+│   ├── domain/               # Business logic
+│   │   ├── Sample.ts         # Entity
+│   │   └── ISampleRepository.ts  # Repository interface
+│   ├── application/          # Use cases
+│   │   ├── CreateSampleUseCase.ts
+│   │   ├── UpdateSampleNotesUseCase.ts
+│   │   ├── DeleteSampleUseCase.ts
+│   │   ├── GetSampleUseCase.ts
+│   │   ├── ListSamplesByPatientUseCase.ts
+│   │   ├── StartProcessingSampleUseCase.ts
+│   │   ├── CompleteSampleUseCase.ts
+│   │   └── RejectSampleUseCase.ts
+│   ├── infrastructure/       # Technical implementations
+│   │   ├── InMemorySampleRepository.ts
+│   │   └── Container.ts      # Dependency injection
+│   ├── presentation/         # HTTP API
+│   │   ├── SampleController.ts
+│   │   └── sampleRoutes.ts
 │   └── index.ts
 ├── shared/                    # Shared utilities
 │   ├── errors/               # Custom error classes
+│   │   ├── ValidationError.ts
+│   │   ├── NotFoundError.ts
+│   │   ├── ConflictError.ts
+│   │   ├── UnauthorizedError.ts
+│   │   ├── ForbiddenError.ts
+│   │   ├── InternalServerError.ts
+│   │   └── index.ts
 │   ├── middleware/           # Express middleware
+│   │   └── errorHandler.ts
 │   └── index.ts
 ├── Container.ts              # Global dependency injection
 └── index.ts                  # Entry point
