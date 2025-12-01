@@ -95,23 +95,16 @@ export class Patient {
     return this.updatedAt;
   }
 
-  changeFirstName(newFirstName: PatientFirstName): void {
-    this.firstName = newFirstName;
-    this.updatedAt = new Date();
-  }
-
-  changeLastName(newLastName: PatientLastName): void {
-    this.lastName = newLastName;
-    this.updatedAt = new Date();
-  }
-
-  changeEmail(newEmail: PatientEmail): void {
-    this.email = newEmail;
-    this.updatedAt = new Date();
-  }
-
-  changePhone(newPhone: PatientPhone): void {
-    this.phone = newPhone;
+  update(
+    firstName: PatientFirstName,
+    lastName: PatientLastName,
+    email: PatientEmail,
+    phone: PatientPhone,
+  ): void {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.phone = phone;
     this.updatedAt = new Date();
   }
 

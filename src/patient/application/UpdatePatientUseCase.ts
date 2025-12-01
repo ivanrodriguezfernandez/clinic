@@ -35,21 +35,12 @@ export class UpdatePatientUseCase {
       throw new NotFoundError(`Patient with id ${request.id} not found`);
     }
 
-    if (request.firstName) {
-      patient.changeFirstName(new PatientFirstName(request.firstName));
-    }
+    const firstName = request.firstName ? new PatientFirstName(request.firstName) : patient.getFirstName();
+    const lastName = request.lastName ? new PatientLastName(request.lastName) : patient.getLastName();
+    const email = request.email ? new PatientEmail(request.email) : patient.getEmail();
+    const phone = request.phone ? new PatientPhone(request.phone) : patient.getPhone();
 
-    if (request.lastName) {
-      patient.changeLastName(new PatientLastName(request.lastName));
-    }
-
-    if (request.email) {
-      patient.changeEmail(new PatientEmail(request.email));
-    }
-
-    if (request.phone) {
-      patient.changePhone(new PatientPhone(request.phone));
-    }
+    patient.update(firstName, lastName, email, phone);
 
     await this.patientRepository.update(patient);
 
