@@ -59,18 +59,10 @@ export class Clinic {
     return this.updatedAt;
   }
 
-  changeName(newName: ClinicName): void {
-    this.name = newName;
-    this.updatedAt = new Date();
-  }
-
-  changeAddress(newAddress: ClinicAddress): void {
-    this.address = newAddress;
-    this.updatedAt = new Date();
-  }
-
-  changePhone(newPhone: ClinicPhone): void {
-    this.phone = newPhone;
+  update(name: ClinicName, address: ClinicAddress, phone: ClinicPhone): void {
+    this.name = name;
+    this.address = address;
+    this.phone = phone;
     this.updatedAt = new Date();
   }
 

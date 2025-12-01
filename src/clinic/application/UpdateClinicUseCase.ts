@@ -30,17 +30,11 @@ export class UpdateClinicUseCase {
       throw new NotFoundError(`Clinic with id ${request.id} not found`);
     }
 
-    if (request.name) {
-      clinic.changeName(new ClinicName(request.name));
-    }
+    const name = request.name ? new ClinicName(request.name) : clinic.getName();
+    const address = request.address ? new ClinicAddress(request.address) : clinic.getAddress();
+    const phone = request.phone ? new ClinicPhone(request.phone) : clinic.getPhone();
 
-    if (request.address) {
-      clinic.changeAddress(new ClinicAddress(request.address));
-    }
-
-    if (request.phone) {
-      clinic.changePhone(new ClinicPhone(request.phone));
-    }
+    clinic.update(name, address, phone);
 
     await this.clinicRepository.update(clinic);
 
